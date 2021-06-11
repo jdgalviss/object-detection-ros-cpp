@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/developer/object_detection/catkin_ws/install/setup.sh

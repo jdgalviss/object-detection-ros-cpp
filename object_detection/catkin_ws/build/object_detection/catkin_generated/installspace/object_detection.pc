@@ -1,0 +1,8 @@
+prefix=/home/developer/object_detection/catkin_ws/install
+
+Name: object_detection
+Description: Description of object_detection
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lobject_detection
+Requires: cv_bridge image_transport roscpp rospy std_msgs

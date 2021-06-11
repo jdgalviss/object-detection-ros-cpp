@@ -1,0 +1,13 @@
+<launch>
+
+    <!-- <rosparam file="$(find lio_sam)/config/params_jackal.yaml" command="load" /> -->
+    <node pkg="cv_camera" type="cv_camera_node" name="cv_camera" respawn="true" />
+    <node pkg="object_detection" type="object_detection_node" name="object_detection" respawn="true" />
+
+
+        <!-- <rosparam param="datum">[42.35893211, -71.09345588, 0.0, world, base_link]</rosparam> -->
+        <!-- <remap from="imu/data" to="imu_correct" />
+        <remap from="gps/fix" to="gps/fix" />
+        <remap from="odometry/filtered" to="odometry/navsat" /> -->
+    <!-- </node> -->
+</launch>
