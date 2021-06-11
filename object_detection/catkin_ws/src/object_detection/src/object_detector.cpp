@@ -1,11 +1,10 @@
 // #include <iostream>
-#include <object_detection/object_detector.h>
+#include "object_detection/object_detector.h"
 
 
 ObjectDetector::ObjectDetector(const std::string &classes_filename, const std::string &model_filename, 
                                 const std::string &model_config, float score_threshold)
 {
-    // std::cout<<"object inside:"<<classes_filename<<std::endl;
     score_threshold_ = score_threshold;
     std::ifstream ifs(classes_filename.c_str());
     if(!ifs){
@@ -16,14 +15,12 @@ ObjectDetector::ObjectDetector(const std::string &classes_filename, const std::s
     {
         class_names_.push_back(line);
     }  
-
     model_ = cv::dnn::readNet(model_filename, model_config, "Tensorflow");
 
 }
 
 
 std::vector<Prediction> ObjectDetector::ProcessFrame(cv::Mat &image){
-    // cv::Mat image = cv::imread("/home/developer/object_detection/catkin_ws/src/object_detection/model/image_2.jpg", cv::IMREAD_COLOR);
     image_height_ = image.cols;
     image_width_ = image.rows;
     cv::Mat blob = cv::dnn::blobFromImage(image, 1.0, cv::Size(300, 300), cv::Scalar(127.5, 127.5, 127.5), 

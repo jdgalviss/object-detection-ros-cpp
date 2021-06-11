@@ -2,3 +2,4 @@
 *.jpg
 *.caffemodel
 *.pb
+*.vscode

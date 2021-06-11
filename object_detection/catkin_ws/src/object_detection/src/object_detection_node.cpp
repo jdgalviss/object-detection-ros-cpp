@@ -1,10 +1,13 @@
 #include <stdlib.h>
 #include <memory>
 #include <ros/ros.h>
-#include <object_detection/object_detector.h>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
+
+#include "object_detection/object_detector.h"
+#include "object_detection/utils.h"
+
 
 class ObjectDetectionNode : public ObjectDetector
 {
@@ -12,7 +15,6 @@ public:
     ObjectDetectionNode(const std::string &classes_filename, const std::string &model_filename, const std::string &model_config,
                         float score_threshold, ros::NodeHandle *nh) : ObjectDetector(classes_filename, model_filename, model_config, score_threshold), nh_(nh), it_(*nh)
     {
-        // ROS_INFO("OD Object");
         InitializePubSub();
     }
 
@@ -35,10 +37,8 @@ private:
             ROS_ERROR("cv_bridge exception: %s", e.what());
             return;
         }
-        // ROS_INFO("Image cb");
 
         std::vector<Prediction> predictions = ProcessFrame(cv_ptr->image);
-        // ROS_INFO("Image cb");
 
         // Update GUI Window
         cv::imshow("Image window", cv_ptr->image);
@@ -52,10 +52,9 @@ private:
     image_transport::Subscriber image_sub_;
     cv_bridge::CvImage bridge;
     image_transport::ImageTransport it_;
-
 };
 
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     // ROS stuff
     ros::init(argc, argv, "od_node");
@@ -63,15 +62,53 @@ main(int argc, char **argv)
     ros::NodeHandle n("~");
     ros::Rate r(10.0);
 
-    std::string class_filename = "/home/developer/object_detection/catkin_ws/src/object_detection/model/object_detection_classes_coco.txt";
-    std::string model_filename = "/home/developer/object_detection/catkin_ws/src/object_detection/model/frozen_inference_graph.pb";
-    std::string model_config = "/home/developer/object_detection/catkin_ws/src/object_detection/model/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt";
-    // ROS_INFO("creating object");
-    ObjectDetectionNode object_detection_node(class_filename, model_filename, model_config, 0.4, &n);
+    std::string class_filename;
+    std::string model_filename;
+    std::string model_config;
+    float score_threshold;
+
+
+    // Read Parameters
+    if (!getParameter("/model/class_filename", class_filename))
+    {
+        ROS_ERROR("class_filename not set");
+        return -1;
+    }
+
+    if (!getParameter("/model/model_filename", model_filename))
+    {
+        ROS_ERROR("model_filename not set");
+        return -1;
+    }
+
+    if (!getParameter("/model/config_file", model_config))
+    {
+        ROS_ERROR("model_config not set");
+        return -1;
+    }
+
+    if (!getParameter("/model/score_threshold", score_threshold))
+    {
+        ROS_WARN("score_threshold not set, using default value: 0.4");
+        score_threshold = 0.5;
+    }
+
+
+    std::unique_ptr<ObjectDetectionNode> object_detection_node;
+    try
+    {
+        object_detection_node = std::make_unique<ObjectDetectionNode>(class_filename, model_filename, model_config, score_threshold, &n);
+    }
+    catch (std::runtime_error e)
+    {
+        std::cout << e.what() 
+        << std::endl;
+    }
 
     while (n.ok())
     {
         ros::spinOnce();
         r.sleep();
     }
+    return 0;
 }

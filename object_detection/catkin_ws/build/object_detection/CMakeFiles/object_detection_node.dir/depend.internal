@@ -3,6 +3,7 @@
 
 object_detection/CMakeFiles/object_detection_node.dir/src/object_detection_node.cpp.o
  /home/developer/object_detection/catkin_ws/src/object_detection/include/object_detection/object_detector.h
+ /home/developer/object_detection/catkin_ws/src/object_detection/include/object_detection/utils.h
  /home/developer/object_detection/catkin_ws/src/object_detection/src/object_detection_node.cpp
  /opt/ros/noetic/include/cv_bridge/cv_bridge.h
  /opt/ros/noetic/include/image_transport/camera_publisher.h
