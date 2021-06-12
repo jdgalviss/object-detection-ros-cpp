@@ -13,7 +13,8 @@ class ObjectDetectionNode : public ObjectDetector
 {
 public:
     ObjectDetectionNode(const std::string &classes_filename, const std::string &model_filename, const std::string &model_config,
-                        float score_threshold, ros::NodeHandle *nh) : ObjectDetector(classes_filename, model_filename, model_config, score_threshold), nh_(nh), it_(*nh)
+                        float score_threshold, bool display_image, ros::NodeHandle *nh) : ObjectDetector(classes_filename, model_filename, model_config, 
+                        score_threshold), display_image_(display_image), nh_(nh), it_(*nh)
     {
         InitializePubSub();
     }
@@ -41,12 +42,13 @@ private:
         std::vector<Prediction> predictions = ProcessFrame(cv_ptr->image);
 
         // Update GUI Window
-        cv::imshow("Image window", cv_ptr->image);
-        cv::waitKey(3);
-
-        // Output modified video stream
+        if(display_image_){
+            cv::imshow("Image window", cv_ptr->image);
+            cv::waitKey(3);
+        }
         image_pub_.publish(cv_ptr->toImageMsg());
     }
+    bool display_image_;
     ros::NodeHandle *nh_; // ROS node handler
     image_transport::Publisher image_pub_;
     image_transport::Subscriber image_sub_;
@@ -61,12 +63,11 @@ int main(int argc, char **argv)
     ros::Time::init();
     ros::NodeHandle n("~");
     ros::Rate r(10.0);
-
     std::string class_filename;
     std::string model_filename;
     std::string model_config;
     float score_threshold;
-
+    bool display_image;
 
     // Read Parameters
     if (!getParameter("/model/class_filename", class_filename))
@@ -93,11 +94,16 @@ int main(int argc, char **argv)
         score_threshold = 0.5;
     }
 
+    if (!getParameter("/display/imshow", display_image))
+    {
+        ROS_WARN("display_image not set, using default value: false");
+        display_image = false;
+    }
 
     std::unique_ptr<ObjectDetectionNode> object_detection_node;
     try
     {
-        object_detection_node = std::make_unique<ObjectDetectionNode>(class_filename, model_filename, model_config, score_threshold, &n);
+        object_detection_node = std::make_unique<ObjectDetectionNode>(class_filename, model_filename, model_config, score_threshold, display_image, &n);
     }
     catch (std::runtime_error e)
     {

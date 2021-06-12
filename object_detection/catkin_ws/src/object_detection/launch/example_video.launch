@@ -1,0 +1,18 @@
+<launch>
+
+    <rosparam file="$(find object_detection)/config/params_mobilenet_ssd.yaml" command="load" />
+   <!-- launch video stream -->
+   <include file="$(find video_stream_opencv)/launch/camera.launch" >
+        <arg name="camera_name" value="cv_camera" />
+        <arg name="video_stream_provider" value="/home/developer/object_detection/catkin_ws/src/object_detection/model/video_1.mp4" />
+        <arg name="set_camera_fps" value="30"/>
+        <arg name="buffer_queue_size" value="100" />
+        <arg name="fps" value="30" />
+        <arg name="frame_id" value="camera" />
+        <arg name="camera_info_url" value="" />
+        <arg name="flip_horizontal" value="false" />
+        <arg name="flip_vertical" value="false" />
+        <arg name="visualize" value="false" />
+   </include>
+    <node pkg="object_detection" type="object_detection_node" name="object_detection" respawn="false" />
+</launch>

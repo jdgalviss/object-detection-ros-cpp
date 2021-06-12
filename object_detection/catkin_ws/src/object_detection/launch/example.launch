@@ -1,0 +1,7 @@
+<launch>
+
+    <rosparam file="$(find object_detection)/config/params_mobilenet_ssd.yaml" command="load" />
+    <node pkg="cv_camera" type="cv_camera_node" name="cv_camera" respawn="true" />
+    <node pkg="object_detection" type="object_detection_node" name="object_detection" respawn="false" />
+
+</launch>

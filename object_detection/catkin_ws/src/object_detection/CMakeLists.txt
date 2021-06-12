@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
 )
-find_package(OpenCV 4.3.0 REQUIRED)
 # find_package(OpenCV 4.3.0 REQUIRED )
 find_package(Threads REQUIRED)
 

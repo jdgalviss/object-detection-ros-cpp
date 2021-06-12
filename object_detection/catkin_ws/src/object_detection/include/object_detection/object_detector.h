@@ -9,7 +9,6 @@ struct Prediction{
     float score;
     int label;
 };
-
 class ObjectDetector{
     public:
         ObjectDetector(const std::string &classes_filename, const std::string &model_filename,  const std::string &model_config, float score_threshold);

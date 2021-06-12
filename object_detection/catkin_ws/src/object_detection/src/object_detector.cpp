@@ -1,6 +1,4 @@
-// #include <iostream>
 #include "object_detection/object_detector.h"
-
 
 ObjectDetector::ObjectDetector(const std::string &classes_filename, const std::string &model_filename, 
                                 const std::string &model_config, float score_threshold)
@@ -16,7 +14,6 @@ ObjectDetector::ObjectDetector(const std::string &classes_filename, const std::s
         class_names_.push_back(line);
     }  
     model_ = cv::dnn::readNet(model_filename, model_config, "Tensorflow");
-
 }
 
 
@@ -25,13 +22,9 @@ std::vector<Prediction> ObjectDetector::ProcessFrame(cv::Mat &image){
     image_width_ = image.rows;
     cv::Mat blob = cv::dnn::blobFromImage(image, 1.0, cv::Size(300, 300), cv::Scalar(127.5, 127.5, 127.5), 
                             true, false);
-
     model_.setInput(blob);
-
     cv::Mat output = model_.forward();
-
     cv::Mat detectionMat(output.size[2], output.size[3], CV_32F, output.ptr<float>());
-
     std::vector<Prediction> result;
     for (int i = 0; i < detectionMat.rows; i++){
         Prediction pred;

@@ -36,21 +36,22 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
     ros-noetic-cv-bridge \
     ros-noetic-image-transport \
     ros-noetic-cv-camera \
+    ros-noetic-video-stream-opencv \
     && rm -rf /var/lib/apt/lists/*
 
-# Install OpenCV - only for running the example
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get install build-essential -y && \
-    apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev -y && \
-    mkdir -p /opencv && \
-    cd /opencv && \
-    wget -c https://github.com/opencv/opencv/archive/4.3.0.zip && \
-    unzip 4.3.0.zip && cd opencv-4.3.0 && \
-    mkdir build && cd build &&\
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
-    make -j`nproc` && \
-    make install
+# Install OpenCV (not necessary since we are using ROS noetic's OpenCV installation)
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+#     apt-get install build-essential -y && \
+#     apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev -y && \
+#     mkdir -p /opencv && \
+#     cd /opencv && \
+#     wget -c https://github.com/opencv/opencv/archive/4.3.0.zip && \
+#     unzip 4.3.0.zip && cd opencv-4.3.0 && \
+#     mkdir build && cd build &&\
+#     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
+#     make -j`nproc` && \
+#     make install
 
 # USER developer
 RUN useradd -ms /bin/bash developer && echo "developer:developer" | chpasswd && adduser developer sudo && adduser developer root
-WORKDIR /home/developer
+WORKDIR /home/developer/object_detectio/catkin_ws

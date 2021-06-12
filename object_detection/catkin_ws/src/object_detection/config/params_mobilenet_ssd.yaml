@@ -1,0 +1,15 @@
+model:
+  class_filename: "/home/developer/object_detection/catkin_ws/src/object_detection/model/object_detection_classes_coco.txt"
+  model_filename: "/home/developer/object_detection/catkin_ws/src/object_detection/model/frozen_inference_graph.pb"
+  config_file: "/home/developer/object_detection/catkin_ws/src/object_detection/model/ssd_mobilenet_v2_coco_2018_03_29.pbtxt.txt"
+  score_threshold: 0.4
+display:
+  imshow: true
+
+# cv-camera params
+cv_camera:
+  rate: 10
+  device_id: 0
+  frame_id: "camera"
+  image_width: 640
+  image_height: 480

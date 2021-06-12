@@ -1,4 +1,0 @@
-docker run --net=host -v `pwd`/object_detection:/home/developer/object_detection -p 8888:8888 --device /dev/video0 -it --rm --gpus all object_detection
-docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" --env QT_X11_NO_MITSHM=1 -v `pwd`/object_detection:/home/developer/object_detection -p 8888:8888 --device /dev/video0 -it --rm --gpus all object_detection2
-
-./objectdetector -i ./../data/coffee.jpg 
