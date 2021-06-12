@@ -54,4 +54,4 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && \
 
 # USER developer
 RUN useradd -ms /bin/bash developer && echo "developer:developer" | chpasswd && adduser developer sudo && adduser developer root
-WORKDIR /home/developer/object_detectio/catkin_ws
+WORKDIR /home/developer/object_detection/catkin_ws
