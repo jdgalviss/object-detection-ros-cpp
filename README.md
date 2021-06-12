@@ -4,6 +4,8 @@ This repository contains ROS-implementation of an object detector in c++ using [
 <img src="imgs/objectDetection.gif"/>
 
 # Installation
+## Using docker (recommended)
+
 1. Install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/).
 2. (Optional) Follow [Post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/) in order to run without root privileges.
 3. Download repository
@@ -50,7 +52,6 @@ This repository contains ROS-implementation of an object detector in c++ using [
     roslaunch object_detection example.launch
     ```
 10. Aditionally, there is a launch file ([example_video.launch](object_detection/catkin_ws/src/objec_detection/launch/example_video.launch)) that takes a video as input instead of camera images.
-## Using docker (recommended)
 
 ## On host (tested on UBuntu 20.04 and ROS noetic)
 
