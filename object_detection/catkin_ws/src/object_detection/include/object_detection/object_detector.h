@@ -5,7 +5,7 @@
 #include <opencv2/dnn/all_layers.hpp>
 
 struct Prediction{
-    std::vector<float> box;
+    std::vector<int> box;
     float score;
     int label;
 };

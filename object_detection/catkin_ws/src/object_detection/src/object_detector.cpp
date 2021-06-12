@@ -13,6 +13,7 @@ ObjectDetector::ObjectDetector(const std::string &classes_filename, const std::s
     {
         class_names_.push_back(line);
     }  
+    ifs.close();
     model_ = cv::dnn::readNet(model_filename, model_config, "Tensorflow");
 }
 
@@ -35,7 +36,7 @@ std::vector<Prediction> ObjectDetector::ProcessFrame(cv::Mat &image){
             int box_y = static_cast<int>(detectionMat.at<float>(i, 4) * image.rows);
             int box_width = static_cast<int>(detectionMat.at<float>(i, 5) * image.cols - box_x);
             int box_height = static_cast<int>(detectionMat.at<float>(i, 6) * image.rows - box_y);
-            pred.box = std::vector<float>{box_x, box_y, box_width, box_height};
+            pred.box = std::vector<int>{box_x, box_y, box_width, box_height};
             DrawBoxes(image, pred);
             result.push_back(pred);
         }

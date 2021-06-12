@@ -2,3 +2,5 @@
 *.jpg
 *.caffemodel
 *.vscode
+object_detection/catkin_ws/build
+object_detection/catkin_ws/devel
