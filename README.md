@@ -162,3 +162,9 @@ __Concurrency__
 |  | A promise and future is used in the project. | A promise and future is used to pass data from a worker thread to a parent thread in the project code.| |
 | | A mutex or lock is used in the project. | A mutex or lock (e.g. std::lock_guard or `std::unique_lock) is used to protect data that is shared across multiple threads in the project code.| |
 |  | A condition variable is used in the project. | A std::condition_variable is used in the project code to synchronize thread execution.| |
+
+![image](https://github.com/jdgalviss/object-detection-ros-cpp/assets/18732666/63964594-8980-4f48-96e5-69e326bcb192)
+
+![image](https://github.com/jdgalviss/object-detection-ros-cpp/assets/18732666/6222caa3-2d64-4de6-ab71-7a0fcebf2069)
+
+
